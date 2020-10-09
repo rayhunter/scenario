@@ -10,9 +10,25 @@
 body {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: top;
   min-height: 100wh;
   font-size: 16px;
+}
+
+#localtime {
+  display: flex;
+  justify-content: flex-end;
+  margin: 1em;
+  padding: 1em; 
+  /*text-align: right;*/
+}
+
+/* #localtime div {
+  margin: 0 .25em;
+} */
+
+.region {
+  padding: 0 1em;
 }
 
 nav {
@@ -33,6 +49,7 @@ nav a:hover {
 }
 
 nav a.active {
+  font-weight: 500;
   color: #000;
 }
 
