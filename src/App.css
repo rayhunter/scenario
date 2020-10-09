@@ -38,6 +38,7 @@ body {
 nav {
   position: relative;
   display: flex;
+  flex-wrap: wrap;
 }
 
 nav a {
@@ -91,4 +92,26 @@ nav #markerbg {
 .sections a {
   color: #9f9f9f;
   text-decoration: none;
+}
+
+/* these breakpoints are arbitrary. normally, I would 
+   align them with standard breakpoints.
+*/
+
+@media only screen and (max-width: 860px) {
+  body {
+    font-size: 14px;
+  }
+}
+
+@media only screen and (max-width: 785px) {
+  nav {
+    flex-direction: column;
+  }
+  nav a {
+    padding: .5em 0;
+  }
+  #marker, #markerbg {
+    display: none;
+  }
 }

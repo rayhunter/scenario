@@ -4,7 +4,7 @@ import './App.css';
 const App = () => {
   const [currentRegion, setCurrentRegion] = useState('Cupertino');
   const [theTime, setTheTime] = useState('');
-  
+
   useEffect(() => {
 
     let marker = document.querySelector('#marker');
@@ -28,8 +28,7 @@ const App = () => {
       marker.style.width = e.offsetWidth + "px";
 
       let localizedTime = calculateDateTime(e.dataset.tab);
-      console.log(localizedTime);
-      console.log(e.id);
+      // updating state/store
       setTheTime(localizedTime);
       setCurrentRegion(e.id);
 
@@ -40,6 +39,13 @@ const App = () => {
       }
     }
 
+    function handleResize() {
+      /* TODO: determine current active link and highlight it */
+      /* reflow nav or media-query to smaller font-size       */
+      /* this method not currently used                       */
+      window.addEventListener('resize', handleResize)
+    }
+
     // setting first city as active on load
     indicator(document.querySelectorAll('nav a')[0]);
     document.querySelectorAll('nav a')[0].className = 'active';
@@ -47,19 +53,21 @@ const App = () => {
     items.forEach(link => {
       link.addEventListener('click', (e)=> {
         e.preventDefault();
+
         indicator(e.target);
         
         e.target.className = 'active';
 
-        let navBar = document.querySelector('nav');
         let current = document.getElementsByClassName('active');
-
         // if no active class
         if (current.length > 0) {
           current[0].className = current[0].className.replace(' active', '');
-        }  
+        }
       })
-    })
+    });
+
+    handleResize();
+
   }, []);
 
   /* 
@@ -118,6 +126,7 @@ const App = () => {
           })
         }
       </nav>
+      {/* TODO: city content window that would display when when active */}
       {/* <ul className="section-list">
         { 
           locations.map((objLink, k) => {
