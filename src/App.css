@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap");
 
 * {
   margin: 0;
@@ -19,17 +19,21 @@ body {
   display: flex;
   justify-content: flex-end;
   margin: 1em;
-  padding: 1em; 
-  /*text-align: right;*/
+  padding: .5em;
+  color: darkolivegreen;
+  font-size: .8em; 
 }
-
-/* #localtime div {
-  margin: 0 .25em;
-} */
 
 .region {
-  padding: 0 1em;
+  padding: 0 .25em;
+  color: #000;
 }
+
+.time {
+  padding: 0 .25em;
+  color: darkolivegreen;
+}
+
 
 nav {
   position: relative;
@@ -45,7 +49,7 @@ nav a {
 }
 
 nav a:hover {
-  color: blue;
+  color: rgb(42,126,186);
 }
 
 nav a.active {

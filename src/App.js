@@ -3,10 +3,12 @@ import './App.css';
 
 const App = () => {
   const [currentRegion, setCurrentRegion] = useState('Cupertino');
-  const [currentOffset, setCurrentOffset] = useState(-7);
   const [theTime, setTheTime] = useState('');
   
   useEffect(() => {
+
+    let marker = document.querySelector('#marker');
+    let items = document.querySelectorAll('nav a');
 
     function calculateDateTime(offset) {
       // get current local time in milliseconds
@@ -24,62 +26,46 @@ const App = () => {
     function indicator(e){
       marker.style.left = e.offsetLeft + "px";
       marker.style.width = e.offsetWidth + "px";
+
+      let localizedTime = calculateDateTime(e.dataset.tab);
+      console.log(localizedTime);
+      console.log(e.id);
+      setTheTime(localizedTime);
+      setCurrentRegion(e.id);
+
       let navBar = document.querySelector('nav');
       let links = navBar.querySelectorAll('a');
       for (let i = 0; i < links.length; i++) {
         links[i].className = "";
-        //console.log(e.target);
       }
     }
 
-    function setActive(){
-      let navBar = document.querySelector('nav');
-      let links = navBar.querySelectorAll('a');
-
-      // loop through links and add the active class to the current/clicked anchor
-      for (let i = 0; i < links.length; i++) {
-        links[i].addEventListener('click', function() {
-          let current = document.getElementsByClassName('active');
-          console.log(current);
-
-          // if no active class
-          if (current.length > 0) {
-            current[0].className = current[0].className.replace(' active', '');
-          }
-          // add the active class to current/clicked link
-          this.className += " active";
-          //setCurrentRegion(this.id);
-        });
-      } 
-    }
-
-    let marker = document.querySelector('#marker');
-    let item = document.querySelectorAll('nav a');
-
+    // setting first city as active on load
     indicator(document.querySelectorAll('nav a')[0]);
     document.querySelectorAll('nav a')[0].className = 'active';
 
-    item.forEach(link => {
+    items.forEach(link => {
       link.addEventListener('click', (e)=> {
         e.preventDefault();
         indicator(e.target);
+        
         e.target.className = 'active';
-  
-        let navBar = document.querySelector('nav');
-        let links = navBar.querySelectorAll('a');
 
+        let navBar = document.querySelector('nav');
         let current = document.getElementsByClassName('active');
 
-          // if no active class
-          if (current.length > 0) {
-            current[0].className = current[0].className.replace(' active', '');
-          }
-
-          //setCurrentRegion(this.id);  
+        // if no active class
+        if (current.length > 0) {
+          current[0].className = current[0].className.replace(' active', '');
+        }  
       })
     })
-  });
+  }, []);
 
+  /* 
+    I've mocked this object with UTC offsets for each city 
+    in lieu of using importing luxon or hitting an external api 
+  */ 
   const locations = [
     {
       "section": "cupertino",
@@ -121,14 +107,14 @@ const App = () => {
   return (
     <>  
       <div id="localtime">
-        <div>Current Local Time in</div><div className="region">{currentRegion}</div><div>is {theTime}</div>
+        <div>Local Date and Time in </div><div className="region">{currentRegion}</div> is <div className="time">{theTime}</div>
       </div>  
       <nav>
         <div id="marker"></div>
         <div id="markerbg"></div>
         { 
           locations.map((objLink, i) => {
-            return ( <a key={i} href={objLink.section} id={objLink.label} data-tab={i} className=''>{objLink.label}</a> )
+            return ( <a key={i} href={objLink.section} id={objLink.label} data-tab={objLink.offset} className=''>{objLink.label}</a> )
           })
         }
       </nav>
